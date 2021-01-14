@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.iftm.course.dto.UserDTO;
-import com.iftm.course.dto.UserInsertDTO;
+import com.iftm.course.entities.User;
 import com.iftm.course.services.UserService;
 
 @RestController
@@ -39,11 +39,11 @@ public class UserResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<UserDTO> insert(@RequestBody UserInsertDTO dto) {
-		UserDTO newDto = service.insert(dto);
+	public ResponseEntity<User> insert(@RequestBody User obj) {
+		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-					.buildAndExpand(newDto.getId()).toUri();
-		return ResponseEntity.created(uri).body(newDto);
+					.buildAndExpand(obj.getId()).toUri();
+		return ResponseEntity.created(uri).body(obj);
 	}
 	
 	@DeleteMapping(value = "/{id}")
